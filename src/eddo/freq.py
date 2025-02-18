@@ -21,10 +21,8 @@ def get_frequence(texts, feature="text", model: str = None, regex: str = None,mo
     - ignore_punctuation : bool, True pour ignorer la ponctuation
     - use_tfidf : bool, True pour normaliser les fréquences avec TF-IDF
     """
-    nlp = spacy.load(model) if model else None
     all_features = set()
     tokenized_texts = {}
-
     for key, value in texts.items():
         if regex:
             tokens = re.findall(regex, value)
@@ -33,6 +31,7 @@ def get_frequence(texts, feature="text", model: str = None, regex: str = None,mo
         elif model:
             match mode :
                 case "spacy":
+                    nlp = spacy.load(model) if model else None
                     doc = nlp(value)
                     if feature == "text":
                         tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
