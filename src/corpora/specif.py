@@ -4,7 +4,7 @@ from scipy.stats import fisher_exact, barnard_exact, chi2_contingency
 
 def specificite(df, partitions, mode):
     # Vérifier si les partitions existent dans df
-    print(df)
+
     selected_columns = [group for group in partitions if all(col in df.columns for col in group)]
     
     if not selected_columns:
@@ -15,8 +15,7 @@ def specificite(df, partitions, mode):
         str(idx+1): df.loc[:, group].sum(axis=1) for idx, group in enumerate(selected_columns)
     })
 
-    print(new_df)  # Affichage du DataFrame généré
-    
+
     df = new_df
     matrice = df.copy()
     total_sum = df.to_numpy().sum()
@@ -40,7 +39,7 @@ def specificite(df, partitions, mode):
                     matrice.loc[mot, part] = 1-float(value)
                 case 'barnard':
                     value = barnard_exact(contingency_table).pvalue
-                    matrice.loc[mot, part] = 1-float(value)
+                    matrice.loc[mot, part] = float(value)
           
     return matrice
 
