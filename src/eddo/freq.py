@@ -3,8 +3,8 @@ import re
 from collections import Counter
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-
-def get_frequence(texts, feature="text", model: str = None, regex: str = None, ignore_punctuation: bool = True,stop_words:str =None, use_tfidf=False):
+import spacy_udpipe
+def get_frequence(texts, feature="text", model: str = None, regex: str = None,mode:str ="spacy", ignore_punctuation: bool = True,stop_words:str =None, use_tfidf=False):
     """
     Calcule la fréquence des mots en fonction de l'option choisie. Option pour normaliser avec TF-IDF.
 
@@ -31,18 +31,36 @@ def get_frequence(texts, feature="text", model: str = None, regex: str = None, i
             if ignore_punctuation:
                 tokens = [token for token in tokens if token.isalnum()]
         elif model:
-            doc = nlp(value)
-            if feature == "text":
-                tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
-            elif feature == "lemma":
-                tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
-            elif feature == "pos":
-                tokens = [token.pos_ for token in doc]
-            elif feature == "msd":
-                tokens = [token.morph for token in doc]
-            else:
-                raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.")
-        else:
+            if mode=="spacy":
+                doc = nlp(value)
+                if feature == "text":
+                    tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                elif feature == "lemma":
+                    tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                elif feature == "pos":
+                    tokens = [token.pos_ for token in doc]
+                elif feature == "msd":
+                    tokens = [token.morph for token in doc]
+                else:
+                    raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.")
+            elif mode=="udpipe":
+                spacy_udpipe.download("la")
+                nlp = spacy_udpipe.load("la")
+                doc = nlp(value)
+                if feature == "text":
+                    tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                elif feature == "lemma":
+                    tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                elif feature == "pos":
+                    tokens = [token.pos_ for token in doc]
+                elif feature == "msd":
+                    tokens = [token.morph for token in doc]
+                else:
+                    raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.")
+
+
+                 
+       else:
             tokens = value.split()
             if ignore_punctuation:
                 tokens = [token for token in tokens if token.isalnum()]
