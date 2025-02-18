@@ -31,32 +31,33 @@ def get_frequence(texts, feature="text", model: str = None, regex: str = None,mo
             if ignore_punctuation:
                 tokens = [token for token in tokens if token.isalnum()]
         elif model:
-            if mode=="spacy":
-                doc = nlp(value)
-                if feature == "text":
-                    tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
-                elif feature == "lemma":
-                    tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
-                elif feature == "pos":
-                    tokens = [token.pos_ for token in doc]
-                elif feature == "msd":
-                    tokens = [token.morph for token in doc]
-                else:
-                    raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.")
-            elif mode=="udpipe":
-                spacy_udpipe.download("la")
-                nlp = spacy_udpipe.load("la")
-                doc = nlp(value)
-                if feature == "text":
-                    tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
-                elif feature == "lemma":
-                    tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
-                elif feature == "pos":
-                    tokens = [token.pos_ for token in doc]
-                elif feature == "msd":
-                    tokens = [token.morph for token in doc]
-                else:
-                    raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.") 
+            match mode :
+                case "spacy":
+                    doc = nlp(value)
+                    if feature == "text":
+                        tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                    elif feature == "lemma":
+                        tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                    elif feature == "pos":
+                        tokens = [token.pos_ for token in doc]
+                    elif feature == "msd":
+                        tokens = [token.morph for token in doc]
+                    else:
+                        raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.")
+                case "udpipe":
+                    spacy_udpipe.download("la")
+                    nlp = spacy_udpipe.load("la")
+                    doc = nlp(value)
+                    if feature == "text":
+                        tokens = [token.text.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                    elif feature == "lemma":
+                        tokens = [token.lemma_.lower() for token in doc if not (ignore_punctuation and token.is_punct)]
+                    elif feature == "pos":
+                        tokens = [token.pos_ for token in doc]
+                    elif feature == "msd":
+                        tokens = [token.morph for token in doc]
+                    else:
+                        raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.") 
         else:
             tokens = value.split()
             if ignore_punctuation:
