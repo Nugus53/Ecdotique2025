@@ -56,11 +56,8 @@ def get_frequence(texts, feature="text", model: str = None, regex: str = None,mo
                 elif feature == "msd":
                     tokens = [token.morph for token in doc]
                 else:
-                    raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.")
-
-
-                 
-       else:
+                    raise ValueError("Feature non valide. Choisissez entre 'text', 'lemma', 'pos' ou 'msd'.") 
+        else:
             tokens = value.split()
             if ignore_punctuation:
                 tokens = [token for token in tokens if token.isalnum()]
