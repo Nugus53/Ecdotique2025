@@ -1,0 +1,84 @@
+ \documentclass{book}
+\usepackage{ekdosis}
+\usepackage{xltabular}
+\SetSeparator{; }
+\SetSubseparator{,}
+\DeclareWitness{Lag}{Lag}{Liber interpretationis hebraicorum nominum, Paul de Lagarde, 1959, p. 59-161 (CCSL 72)}
+\DeclareWitness{H}{H}{Bamberg, Staatsbibliothek, Msc. Bibl. 154, IX\textsuperscript{e} siècle, f. 101v-178v}
+\DeclareWitness{C}{C}{Colmar, Bibliothèque municipale, 33 (41), IX\textsuperscript{e} siècle, f. 81v-118r}
+\DeclareWitness{K}{K}{Karlsruhe, Badische Landesbibliothek, Aug. Perg. CCXVIII, IX-X\textsuperscript{e} siècle, f. 82-127v}
+\DeclareWitness{L}{L}{Laon, Bibliothèque municipale 24, IX\textsuperscript{e} siècle, f. 1v-67v}
+\DeclareWitness{T}{T}{Monte Cassino, Archivio dell’Abbazia, 316 F, IX\textsuperscript{e} siècle, f. 48-142}
+\DeclareWitness{O}{O}{Oxford, Bodleian Library, Marshall 19, IX\textsuperscript{e} siècle, f. 1v-42v}
+\DeclareWitness{Σ}{Σ}{Sankt Gallen, Stiftsbibliothek, Sang. 130, VIII-IX\textsuperscript{e} siècle, f. 267-355}
+
+\begin{document}
+
+\small
+\begin{xltabular}{1\linewidth}{lX}
+\caption*{\textbf{Conspectus siglorum}}\\
+
+\SigLine{C}  \\
+\SigLine{H} \\
+\SigLine{K} \\
+\SigLine{L} \\
+\SigLine{T} \\
+\SigLine{O} \\
+\SigLine{Σ} \\
+\SigLine{Lag} 
+\end{xltabular}
+
+\section{Lettre I}
+ \begin{alignment}[tcols=2,
+lcols=2,
+texts=latin[xml:lang="la"];
+french[xml:lang="fr"],
+apparatus=latin,
+lineation=page]
+
+
+\begin{latin}
+\noident\app{
+\lem[wit={L,O,T}]{Iatham}
+\rdg[wit=C]{Ieththam}
+\rdg[wit=H]{Ietham}
+\rdg[wit=K]{Iotam}
+\rdg[wit={Lag}]{Iotham}
+\rdg[wit={Σ}]{Iathan}
+}: Domini
+\app{
+\lem[wit={C,H,K,L,Lag,O,T}]{consummatio}
+\rdg[wit=Σ]{consumatio}
+}
+\app{
+\lem[wit=C,H,K,L,Lag,Σ]{siue}
+\rdg[wit=O,T]{uel}
+}
+perfectio. \\
+Iezrahel: Semen dei\\
+\app{
+\lem[wit={C,H,K,L,Lag,O,T}]{Iarib}
+\rdg[wit=Σ]{Iarith}
+}: \app{
+\lem[wit={C,H,K,L,Lag,T,Σ}]{Diiudicans}
+\rdg[wit=O]{Deiudicans}
+} uel 
+\app{
+\lem[wit={C,H,K,L,Lag,O,Σ}, alt=\emph{om.}]{}
+\rdg[wit={T}]{de}
+}ulciscens \app{
+\lem[wit={C,H,K,L,Lag,O,T}, alt=\emph{om.}]{}
+\rdg[wit=Σ]{superior}
+}
+\end{latin}
+
+\begin{french}
+\noident Iatham: L'accomplissement ou la perfection du Seigneur\\
+Iezrahel: La semence de Dieu\\
+Iarib: Jugeant ou vengeant\\
+\end{french}
+\end{alignment}
+
+\end{document}
+
+ \end{document}
