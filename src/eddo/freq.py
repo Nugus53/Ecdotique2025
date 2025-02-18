@@ -4,7 +4,7 @@ from collections import Counter
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def get_frequence(texts, feature="text", model: str = None, regex: str = None, ignore_punctuation: bool = True, use_tfidf=False):
+def get_frequence(texts, feature="text", model: str = None, regex: str = None, ignore_punctuation: bool = True,stop_words:str =None, use_tfidf=False):
     """
     Calcule la fréquence des mots en fonction de l'option choisie. Option pour normaliser avec TF-IDF.
 
@@ -46,8 +46,12 @@ def get_frequence(texts, feature="text", model: str = None, regex: str = None, i
             tokens = value.split()
             if ignore_punctuation:
                 tokens = [token for token in tokens if token.isalnum()]
-
-        tokenized_texts[key] = tokens
+        if stop_words :
+            with open(stop_words, "r", encoding="utf-8") as file:
+                stopwords = {line.strip() for line in file if line.strip() and not line.startswith("#")}
+            tokenized_texts[key] = [word for word in tokens if word.lower() not in stopwords]
+        else :
+            tokenized_texts[key] = tokens
         all_features.update(tokens)
 
     all_features = list(all_features)

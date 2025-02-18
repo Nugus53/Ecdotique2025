@@ -40,52 +40,58 @@ def ashMenu(data):
             print(e)
 
     button.on_click(on_button_click)  # Pass function reference, not a cal
+import ipywidgets as widgets
+from IPython.display import display, clear_output
 
 class Partition():
-    def __init__(self,data):
-        self.partitions=[]
-        self.partition_count = 1 
-        self.data=data
+    def __init__(self, data):
+        self.partitions = []
+        self.partition_count = 1
+        self.data = data
         self.out = widgets.Output()
+
+        # Buttons
         add_button = widgets.Button(description="Ajouter une partition")
         add_button.on_click(self.add_partition)
 
-        self.method = widgets.Dropdown(
-        description="méthode :", 
-        options=["fisher", "chi2", "barnard"],
-        value="barnard")
-        
-        calcul_button = widgets.Button(description="Calculer la spéficité")
+        calcul_button = widgets.Button(description="Calculer la spécificité")
         calcul_button.on_click(self.calcul_partition)
-        
-        display(add_button,calcul_button,self.method, self.out)
-    
-    def calcul_partition(self,_):
-        rst=specificite(self.data, self.get_partitions(), self.method.value)
+
+        # Dropdown
+        self.method = widgets.Dropdown(
+            description="Méthode :", 
+            options=["fisher", "chi2", "barnard"],
+            value="barnard"
+        )
+
+        # Display UI elements
+        display(add_button, calcul_button, self.method, self.out)
+
+    def calcul_partition(self, _):
+        rst = specificite(self.data, self.get_partitions(), self.method.value)
         rst.to_excel("export.xlsx")
+
         with self.out:
+            clear_output(wait=True)  # Clears old output before displaying new data
             display(rst)
-        
-    def add_partition(self,_):
-        
-    
-        title = widgets.Label(f"Partition {self.partition_count}:")
-        
+
+    def add_partition(self, _):
+     
+
+        # Fixing the selection widget
         tags = widgets.SelectMultiple(
-            options=list(self.data.columns.tolist()),
-            value=[],
+            options=list(self.data.columns.tolist()),  # Available column names
+            description=f"Partition {self.partition_count}:",
             disabled=False
         )
-        
-        partition_ui = widgets.VBox([title, tags])
+
+
         self.partitions.append(tags)
-    
+
         with self.out:
-            display(partition_ui)
-    
-        self.partition_count += 1  
-        
+            display(tags)
+
+        self.partition_count += 1
+
     def get_partitions(self):
-        partition_list = [tags.value for tags in self.partitions]  
-        return partition_list 
-    
+        return [list(tags.value) for tags in self.partitions]  # Convert tuples to lists
