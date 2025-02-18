@@ -71,10 +71,10 @@ class Partition():
     
         title = widgets.Label(f"Partition {self.partition_count}:")
         
-        tags = widgets.TagsInput(
+        tags = widgets.SelectMultiple(
+            options=list(self.data.columns.tolist()),
             value=[],
-            allowed_tags=list(self.data.columns.tolist()),  
-            allow_duplicates=False
+            disabled=False
         )
         
         partition_ui = widgets.VBox([title, tags])
